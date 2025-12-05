@@ -365,31 +365,46 @@ const PartyManager: React.FC<PartyManagerProps> = ({ parties, setParties }) => {
                     <div 
                         key={party.id}
                         onClick={() => setSelectedParty(party)}
-                        className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 active:scale-98 transition-transform cursor-pointer"
+                        className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 active:scale-98 transition-transform cursor-pointer relative"
                     >
-                        <div className="flex justify-between items-start mb-3">
-                            <div>
-                                <h3 className="font-bold text-lg text-gray-800">{party.birthdayPerson}</h3>
-                                <p className="text-sm text-gray-500 font-medium">{party.theme}</p>
-                            </div>
-                            <span className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide ${safeDate(party.date) < new Date(new Date().setHours(0,0,0,0)) ? 'bg-gray-100 text-gray-500' : 'bg-green-100 text-green-600'}`}>
-                                {safeDate(party.date) < new Date(new Date().setHours(0,0,0,0)) ? 'Realizada' : 'Confirmada'}
-                            </span>
-                        </div>
+                         <div className="flex justify-between items-start mb-2">
+                             <div className="flex-1">
+                                  <div className="flex items-center gap-1 text-xs font-bold text-gray-400 uppercase mb-0.5">
+                                     <User size={10} /> {party.clientName}
+                                  </div>
+                                 <h3 className="font-bold text-lg text-gray-800 leading-tight">{party.birthdayPerson}</h3>
+                                 <p className="text-sm text-primary font-bold">{party.theme}</p>
+                             </div>
+                             <span className={`px-2 py-0.5 rounded-lg text-[10px] font-bold uppercase tracking-wide border ${safeDate(party.date) < new Date(new Date().setHours(0,0,0,0)) ? 'bg-gray-50 text-gray-400 border-gray-200' : 'bg-green-50 text-green-600 border-green-100'}`}>
+                                 {safeDate(party.date) < new Date(new Date().setHours(0,0,0,0)) ? 'Realizada' : 'Confirmada'}
+                             </span>
+                         </div>
                         
-                        <div className="space-y-2">
-                             <div className="flex items-center gap-2 text-gray-600">
-                                 <Calendar size={16} className="text-primary" />
-                                 <span className="text-sm font-medium">{formatDate(party.date)}</span>
-                                 <span className="text-gray-300">|</span>
-                                 <Clock size={16} className="text-primary" />
-                                 <span className="text-sm font-medium">{party.time}</span>
+                        <div className="grid grid-cols-2 gap-y-1.5 gap-x-2 text-sm text-gray-600 mb-2">
+                             <div className="flex items-center gap-1.5">
+                                 <Calendar size={14} className="text-gray-400" />
+                                 <span className="font-medium">{formatDate(party.date)}</span>
                              </div>
-                             <div className="flex items-center gap-2 text-gray-600">
-                                 <MapPin size={16} className="text-secondary" />
-                                 <span className="text-sm truncate font-medium">{party.location}</span>
+                             <div className="flex items-center gap-1.5">
+                                 <Clock size={14} className="text-gray-400" />
+                                 <span className="font-medium">{party.time}</span>
+                             </div>
+                              <div className="flex items-center gap-1.5 col-span-2">
+                                 <Smile size={14} className="text-gray-400" />
+                                 <span className="font-medium">{party.numberOfChildren} Crianças</span>
+                             </div>
+                             <div className="flex items-center gap-1.5 col-span-2">
+                                 <MapPin size={14} className="text-gray-400 shrink-0" />
+                                 <span className="truncate w-full">{party.location}</span>
                              </div>
                         </div>
+
+                         {party.observations && (
+                             <div className="mt-2 bg-yellow-50 p-2 rounded-lg border border-yellow-100 text-xs text-yellow-800">
+                                 <span className="font-bold mr-1">OBS:</span>
+                                 <span className="line-clamp-2">{party.observations}</span>
+                             </div>
+                         )}
                     </div>
                 ))
             )}
